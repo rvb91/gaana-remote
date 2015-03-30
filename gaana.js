@@ -1,22 +1,52 @@
-function toggleState() {
-  console.log("toggle state of player");
-  $('body').css("background-color", "red");
-}
-
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    console.log(sender.tab ? "from a content script:" + sender.tab.url : "from the extension");
-    console.log("calling from the content script");
+
+    var response = {}
+
     switch(request.action) {
+      case "previous":
+        $(".previous")[0].click();
+        break;
       case "toggle":
         $(".playPause")[0].click();
-        console.log("should toggle the message");
         break;
       case "next":
         $(".next")[0].click();
         break;
+      case "currentInfo":
+        // Do nothing, we are looking up the currnet song info below
+        break;
       default:
-        console.log("default message is being triggered");
-        sendResponse({farewell:"not able to resolve request"})
-      };
+        console.log("Error: Default Message was triggered");
+    };
+
+    response.currentAlbum = getCurrentAlbum();
+    response.currentArtist = getCurrentArist();
+    response.currentSong = getCurrentSong();
+
+    sendResponse(response);
   });
+
+function getCurrentSong() {
+  if ($("#tx")[0]) {
+    return $("#tx")[0].innerHTML.match(/[^<]*/)[0];
+  } else {
+    return "";
+  }
+}
+
+function getCurrentArist() {
+  if( $(".albumNamePl")[1] ) {
+    return $(".albumNamePl")[1].innerHTML;
+  } else {
+    return "";
+  }
+}
+
+function getCurrentAlbum() {
+  if( $(".albumNamePl")[0] ) {
+    return $(".albumNamePl")[0].innerHTML;
+  } else {
+    return "";
+  }
+}

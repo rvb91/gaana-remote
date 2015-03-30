@@ -1,54 +1,45 @@
-<!doctype html>
-<!--
-This page is shown when the extension button is clicked, because the
-"browser_action" field in manifest.json contains the "default_popup" key with
-value "popup.html".
--->
+<!DOCTYPE html>
 <html>
   <head>
     <title>Getting Started Extension's Popup</title>
+    <!-- BOOTSTRAP -->
+    <link href='css/bootstrap.min.css' rel='stylesheet'>
+    <link href='css/bootstrap-theme.min.css' rel='stylesheet'>
+    <link href='css/helper.css' rel='stylesheet'>
+    <script src='jquery.min.js'></script>
+    <script src='js/bootstrap.min.js'></script>
+    <!-- Custom Javascript -->
+    <script src='popup.js'></script>
     <style>
-    body {
-    font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-    font-size: 100%;
-    }
-    #status {
-    /* avoid an excessively wide status text */
-    white-space: pre;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    max-width: 400px;
-    }
+      body {
+        width: 400px;
+        background-color: #303030;
+        color: white;
+      }
     </style>
-    <!--
-    - JavaScript and HTML must be in separate files: see our Content Security
-    - Policy documentation[1] for details and explanation.
-    -
-    - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
-    -->
-    <script src="jquery.min.js"></script>
-    <script src="popup.js"></script>
+    <meta content='width=device-width, initial-scale=1' name='viewport'>
   </head>
-  <body>
-    <div id="status"></div>
-    <img id="image-result" hidden>
-
-    <div>
-      <button  class="btn" id="previous">Previous</button>
-      <br/>
-      <button  class="btn" id="play">Play</button>
-      <br/>
-      <button  class="btn" id="pause">Pause</button>
-      <br/>
-      <button  class="btn" id="next">Next</button>
-      <br/>
-      <button  class="btn" id="toggle">Toggle</button>
-      <br/>
+  <body class='container-fluid'>
+    <div class='row'>
+      <div class='col-xs-6 col-xs-offset-3 p10'>
+        <span aria-hidden='true' class='btn btn-primary glyphicon glyphicon-step-backward' id='previous'></span>
+        <span class='btn btn btn-primary' id='toggle'>
+          <span aria-hidden='true' class='glyphicon glyphicon-play'></span>
+          <span aria-hidden='true' class='glyphicon glyphicon-pause'></span>
+        </span>
+        <span aria-hidden='true' class='btn btn-primary glyphicon glyphicon-step-forward' id='next'></span>
+      </div>
     </div>
-
-    <div id="current_song">
-      
+    <div class='row'>
+      <div class='col-xs-12' style='border: 2px dashed red; text-align:center'>
+        <h3 id='current_song'>Nothing Playing</h3>
+        <p id='album_artist'></p>
+      </div>
     </div>
-
+    <div class='row'>
+      <div class='col-xs-12 p10' id='error' style='background-color:red; text-align:center; display:none;'>
+        Default Content that is expanding
+      </div>
+    </div>
   </body>
 </html>
